@@ -1,0 +1,199 @@
+{% extends "templates/layout.njk" %}
+{% block content %}
+  <div class="grid-container"> <!-- Start of main content container -->
+    <h1>
+      <span class="topic-subtitle">
+        Case Study:
+      </span>
+      <br />
+      <span class="topic-title">
+        Samsung Securities and the Korean Stock Market (2004)
+      </span>
+    </h1>
+
+    <hr />
+
+    <div> <!-- Start of Stock Market Databases -->
+      <h3>Stock Market Databases</h3>
+      <p>
+        The Database keeps track of the current state, history of stock items, settled
+        prices and volume data etc.
+      </p>
+      <p>
+        Therefore it is important that a Stock Market Database satisfies a few
+        conditions:
+      </p>
+      <div class="callout secondary">
+        <ul>
+          <li>
+            The database needs to minimize latency due to the constant stream
+            of stock trading messages, updates and relevant user quieries.
+          </li>
+          <li>
+            Conventional implementations of RDBMS, are insufficient for
+            cost-effective management of stock market data, this is due to the
+            sheer volume of data to constantly update at relatively fast rate.
+          </li>
+          <li>
+            Due to competition among stock bokerage firms, it is ideal that
+            there is a low cost of quality service of the database [1].
+          </li>
+        </ul>
+      </div>
+    </div> <!-- End of Stock Market Databases. -->
+
+    <div> <!-- Start of OLTP and In-Memory Databases -->
+      <h3>OLTP and In-Memory Databases</h3>
+      <p>
+        To fufill these conditions, it is imperative that there a
+        viable DBMS that can provide the correct functionality. This is where
+        OTLP and In Memory Databases come in.
+      </p>
+      <p>
+        Utilising an In-Memory DBMS and OLTP provides a variety of benefits:
+      </p>
+      <div class="callout secondary">
+        <ul>
+          <li>
+            By having the database in-memory (<strong>RAM</strong>), there is a
+            massively reduced latency and access times for the data stream.
+          </li>
+          <li>
+            Transaction processing takes advantage concurreny and this utilises
+            as many of the resources the system has access to, ensuring
+            cost-efficiency as most of these systems are very costly to make
+            and maintain.
+          </li>
+          <li>
+            Although scale of the database is huge, it pales in comparison to the
+            available space within memory. In this way, DBMS is incredibly
+            cost-efficient. [2][3].
+          </li>
+        </ul>
+      </div>
+    </div> <!-- End of OLTP and In-Memory Databases -->
+
+    <hr />
+
+    <div> <!-- Start of P*Time -->
+      <h3>Samsung Securities, Inc. and P*TIME</h3>
+      <p>
+        A bit of background on <strong>Samsung Securities, Inc.</strong>,
+        <em>P*TIME</em> and the Korean Stock Market:
+      </p>
+      <div class="callout secondary">
+       <ul>
+        <li>
+          <strong>Samsung Securities, Inc.</strong> is the number 1 stock
+          brokerage firm in South Korea.
+        </li>
+        <li>
+          The Korean market is famous for its volatility and integration of
+          on-line trading, due to the fact that Korea has a well-established
+          wireless and broadband infrastructure.
+        </li>
+        <li>
+          <strong>Samsung Securities, Inc.</strong> concurrently serves from
+          50K to 60K users out of the 800K known registered users.
+        </li>
+        <li>
+          <em>P*TIME</em> is an in-memory OLTP RDBMS, that promises to deliver
+          higher scalabity and reduced latency than existing RDBMS
+          implementations.
+        </li>
+       </ul>
+      </div>
+
+      <p> P*TIME implemented by Samsung securities and analysis:</p>
+      <div class="callout secondary">
+       <ul>
+        <li>
+          <strong>Samsung Securites, Inc.</strong> proceeded to implement
+          <em>P*TIME</em> to handle the stock market database due to
+          <em>P*TIME</em>'s update scalability
+        </li>
+        <li>
+          When compared to standard disk-centric DBMS implementations it was
+          found that <em>P*TIME</em>(<strong>the memory centric dbms</strong>)
+          was <strong>40</strong> times more scalable in throughput, while the
+          disk-centric database also suffered from large degradation of
+          response time.
+        </li>
+        <li>
+          With regards to the scalabity of stream data input, it was found that
+          up to <strong>8x</strong> the original speed concurrent query
+          processing is relatively uneffected and the drop rate of concurrent
+          query throughput is proportional to the CPU usage for real-time stock
+          market updates [1].
+        </li>
+       </ul>
+     </div>
+   </div> <!-- End of P*Time -->
+  </div> <!-- End of main content container -->
+
+  <div class="topics-page-references">
+    <div class="grid-container">
+
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 cell">
+          <h2>References</h2>
+        </div>
+      </div>
+
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 medium-6 cell">
+          <ol class="references-list" style="counter-reset: ref 0">
+            <li>
+              Sang Kyun Cha and Changbin Song.
+              P*Time:Highly Scalable OLTP DBMS for Managing Update-Intensive
+              Stream Workload.
+              In
+              <em>
+                Proceedings of the International Conference on Very Large
+                Data Bases, VLDB
+              </em>,
+              pages 1033-1044, 2004. [Online serial]. Available:
+              <a href="http://www.vldb.org/conf/2004/IND2P2.PDF">
+                http://www.vldb.org/conf/2004/IND2P2.PDF
+              </a>.
+              [Accessed: Mar. 12 2018]
+            </li>
+
+            <li>
+              Stavros Harizopoulos, Daniel J, Abadi, Samuel Madden and Michael
+              Stonebraker.
+              OTLP through the looking glass, and what what we found there.
+              In <em>SIGMOD</em>,
+              pages 981-992, 2008. [Online serial]. Available:
+              <a href="http://nms.csail.mit.edu/%7Estavros/pubs/OLTP_sigmod08.pdf">
+                http://nms.csail.mit.edu/%7Estavros/pubs/OLTP_sigmod08.pdf
+              </a>.
+              [Accessed: Mar. 12 2018]
+            </li>
+          </ol>
+        </div>
+
+        <div class="small-12 medium-6 cell">
+          <ol class="references-list" style="counter-reset: ref 2">
+            <li>
+              Stephen Tu, Wenting Zheng, Eddie Kohler, Barbara Liskov, and
+              Samuel Madden.
+              Speedy Transactions in Multicore In-Memory Databases.
+              In
+              <em>
+                Proceedings of the ACM Symposium on Operating Systems
+                Principles, SOPSP
+              </em>,
+              pages 18-32, 2013.[Online serial]. Available:
+              <a href="https://people.csail.mit.edu/stephentu/papers/silo.pdf">
+                https://people.csail.mit.edu/stephentu/papers/silo.pdf
+              </a>.
+              [Accessed: Mar. 12 2018]
+            </li>
+          </ol>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

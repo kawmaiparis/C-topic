@@ -1,0 +1,170 @@
+{% extends "templates/layout.njk" %}
+{% block content %}
+
+  <div class="grid-container full" id="chandler-cover">
+    <div id="chandler-cover-content">
+      <div class="grid-container">
+
+        <div class="grid-x grid-margin-x">
+          <div class="small-12 cell" id="chandler-cover-title">
+            Chandler Low
+          </div>
+        </div>
+
+        <div class="grid-x grid-margin-x">
+          <div class="small-12 large-4 cell">
+          </div>
+          <div class="small-12 large-4 cell" style="color: white">
+            Blood-Type O
+          </div>
+          <div class="small-12 large-4 cell">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <hr />
+  <br />
+
+  <div id="chandler-body">
+    <div  class="grid-container">
+      <div>
+        <h2 onclick="toggleGen('chandler-me')" class="chandler-dropdown"> About Me </h2>
+        <div id="chandler-me" class="chandler-expandable">
+          Hi there, I am Chandler Low (otherwise known as 罗庭丰),
+          I am currently a first year studying Computing at Imperial, I am from North West London
+          and I am blood type O. Welcome to my personal page/site where you get to know a little bit more
+          about me and my life. Hope you enjoy!
+        </div>
+      </div>
+
+      <br />
+      <hr />
+      <br />
+
+      <div>
+        <h2 onclick="toggleGen('chandler-education')" class="chandler-dropdown"> Education </h2>
+        <div id="chandler-education" class="chandler-expandable">
+          <h3 onclick="toggleGen('chandler-GCSE')" class="chandler-dropdown"> GCSES</h3>
+          <div id="chandler-GCSE" class="chandler-expandable">
+            <p>Further Mathematics - A^
+            <br />Mathematics - A*
+            <br />Science Triple - A*
+            <br />Religion and Ethics - A*
+            <br />Business Studies - A*
+            <br />History - A*
+            <br />Spanish - A*
+            <br />English Language - A
+            <br />German - A
+            <br />Citizenship - A</p>
+          </div>
+          <h3 onclick="toggleGen('chandler-ALEVEL')" class="chandler-dropdown"> A LEVELS </h3>
+          <div id="chandler-ALEVEL" class="chandler-expandable">
+            <p>Mathematics - A*
+            <br />Chemistry - A*
+            <br />Further Mathematics - A
+            <br />Physics - A</p>
+          </div>
+          <h3 onclick="toggleGen('chandler-DEGREE')" class="chandler-dropdown"> DEGREE </h3>
+          <div id="chandler-DEGREE" class="chandler-expandable">
+            <p>First Year - ???</p>
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <hr />
+      <br />
+
+      <div>
+        <h2 onclick="toggleGen('chandler-employment')" class="chandler-dropdown"> Employment History </h2>
+        <div id="chandler-employment" class="chandler-expandable">
+          <img id="marcelpicture" src="images/marcel.jpg">
+        </div>
+       </div>
+
+      <br />
+      <hr />
+      <br />
+
+      <div>
+        <h2 onclick="toggleGen('chandler-skills')" class="chandler-dropdown"> Skills and Accomplishments </h2>
+        <div id="chandler-skills" class="chandler-expandable">
+          <h4 onclick="toggleGen('chandler-subskills')" class="chandler-dropdown"> Skills </h4>
+          <div id="chandler-subskills" class="chandler-expandable">
+            <p>Yeah I got skills what you gonna do about it</p>
+            <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/vsx1eCMDxaE"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <h4 onclick="toggleGen('chandler-subacom')" class="chandler-dropdown"> Accomplishments </h4>
+          <div id="chandler-subacom" class="chandler-expandable">
+            <p>Head Boy of Hatch End High School 2016/17
+            <br />Being A Pretty Cool Dude 2017/18
+            <br />Imperial College ABACUS President 2018/19</p>
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <hr />
+      <br />
+
+      <div>
+        <h2 onclick="toggleGen('chandler-extra')" class="chandler-dropdown">Extra</h2>
+        <div id="chandler-extra" class="chandler-expandable">
+          <h3> I ran out of ideas </h3>
+          <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/QetuGfoVhiQ"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/jxmC0Wg8LsU"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <br />
+      <hr />
+      <br />
+
+      <div>
+        <h2 onclick="toggleGen('chandler-bonus')" id="chandler-surprise" class="chandler-dropdown">One For The Fans </h2>
+        <div id="chandler-bonus" class="chandler-expandable">
+          <iframe width="560" height="315"
+          src="https://www.youtube.com/embed/2k0SmqbBIpQ"
+          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+       </div>
+      </div>
+
+      <div>
+        <nav id="chandler-links">
+         <h2> Find Me Here! </h2>
+         <a href="https://www.facebook.com/chandler.low" target=_blank><img src="images/facebookicon.jpg"></a>
+         <a href="https://www.instagram.com/tng.fng/" target=_blank><img src="images/instagramicon.jpg"></a>
+         <a href="mailto:tfl4517@ic.ac.uk" target=_blank><img src="images/gmail.jpg"></a>
+        </nav>
+      </div>
+
+      <div class="chandler-expandable">
+        <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/po-0n1BKW2w?autoplay=1"
+        frameborder="0" allow="autoplay; encrypted-media"
+        allowfullscreen></iframe>
+      </div>
+
+      <br />
+      <br />
+      <hr />
+      <br />
+
+     </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+<script src="js/chandler-page.js"></script>
+{% endblock %}

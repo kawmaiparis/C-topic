@@ -1,0 +1,82 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}In-Memory Databases{% endblock %}</title>
+    <link rel="stylesheet" href="css/app.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bitter:400,700"
+    rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="top-bar" id="topbar">
+        <div class="top-bar-left">
+          <ul class="dropdown menu" data-dropdown-menu>
+            <li class="menu-text" id="hello">
+              163 Topics - In-Memory Databases
+            </li>
+            <li>
+              <a href="index.html">Home</a>
+            </li>
+            <li>
+              <a href="topic-introduction-to-inmemory-databases.html">
+                Introduction to IMDBs
+              </a>
+            </li>
+            <li>
+              <a href="topic-transaction-management.html">
+                Transaction Management
+              </a>
+            </li>
+            <li>
+              <a href="topic-case-study.html">
+                Case Study
+              </a>
+            </li>
+            <li>
+              <a href="#">Individual Pages</a>
+              <ul class="menu vertical">
+                <li><a href="individual-rohan.html">Rohan Khosla</a></li>
+                <li><a href="individual-fraser.html">Fraser May</a></li>
+                <li><a href="individual-paris.html">Paris Mongkolkul</a></li>
+                <li><a href="individual-chandler.html">Chandler Low</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+      <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+          <div class="small-12 cell">
+            By <a href="mailto:rpk17@ic.ac.uk">Rohan Khosla</a>,
+            <a href="mailto:ftm17@ic.ac.uk">Fraser May</a>,
+            <a href="mailto:pm3617@ic.ac.uk">Paris Mongkolkol</a> and
+            <a href="mailto:tfl4517@ic.ac.uk">Chandler Low</a> (Group 25)
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <script src="js/vendor/jquery.min.js"></script>
+    <script src="js/vendor/what-input.min.js"></script>
+    <script src="js/vendor/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+
+    {% block js %}{% endblock %}
+
+  </body>
+</html>

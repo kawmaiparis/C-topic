@@ -1,0 +1,362 @@
+@import 'settings';
+@import 'foundation';
+@include foundation-everything;
+
+header {
+  #hello {
+    // color: $light-gray;
+  }
+}
+
+main {
+  // HOMEPAGE STYLES
+  #index-cover {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    background-image: url("../images/MVCC-Index-Cover.png");
+    background-size: 100%;
+    position: relative;
+    z-index: -10;
+
+    &:after {
+      content: " ";
+      z-index: -8;
+      display: block;
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    #index-cover-content {
+      margin-top: 5rem;
+      text-align: center;
+
+      #index-cover-title {
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 800;
+        font-size: 5rem;
+      }
+    }
+  }
+
+  .index-topic-card {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 0px solid transparent;
+    border-radius: 0.1rem;
+    background-color: #EFEFEF;
+
+    display: flex;
+    flex-direction: column;
+
+    .topic-card-title {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    div.topic-card-text {
+      margin-bottom: auto;
+    }
+
+    a.button {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  // Common topic styles
+  .topic-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+  }
+  .topic-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    @include breakpoint(small only) {
+      font-size: rem-calc(map-get(map-get(map-get($header-styles, small), 'h3'), 'font-size'));
+    }
+    @include breakpoint(medium up) {
+      font-size: rem-calc(map-get(map-get(map-get($header-styles, medium), 'h3'), 'font-size'));
+    }
+  }
+
+  .topics-page-references {
+    background-color: $light-gray;
+
+    ol.references-list {
+      margin-left: 0;
+      > li {
+        position: relative;
+        list-style-type: none;
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+        &:before {
+          position: absolute;
+          left: -1.6rem;
+          content: '[' counter(ref) '] ';
+          font-weight: bold;
+          counter-increment: ref;
+        }
+      }
+    }
+  }
+
+  // TOPIC-INTRODUCTION STYLES
+  #storage-chart-container {
+    height: 500px;
+    width: 80%;
+    @include breakpoint(small only) {
+      width: 100%;
+    }
+    margin: 1.5rem auto 0 auto;
+    position: relative;
+  }
+
+}
+
+footer {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  background-color: $imperial-blue;
+  color: $light-gray;
+
+  a {
+    font-weight: bold;
+    &:link {
+      color: inherit;
+      text-decoration: none;
+    }
+    &:visited {
+      color: inherit;
+    }
+    &:active {
+      color: inherit;
+    }
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+
+#chandler-body {
+  font-family: Bitter;
+  text-align: center;
+  h1 {
+    font-family: Bitter;
+  }
+  h2 {
+    font-family: Bitter;
+  }
+  h3 {
+    font-family: Bitter;
+  }
+  h4 {
+    font-family: Bitter;
+  }
+}
+
+@keyframes chandlerfadein {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@-webkit-keyframes chandlerfadein{
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+#chandler-cover {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  background-image: url("../images/coverpicturechandler.jpg");
+  background-size: 100%;
+  position: relative;
+  z-index: -10;
+  -webkit-animation: chandlerfadein 2s;
+  animation: chandlerfadein 2s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  transition: all 1s ease;
+  -moz-transition: all 1s ease; /* Firefox 4 */
+  -webkit-transition: all 1s ease; /* Safari and Chrome */
+  -o-transition: all 1s ease; /* Opera */
+
+  /* Enable hardware acceleration to fix laggy transitions */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+
+  &:after {
+    content: " ";
+    z-index: -8;
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.65);
+  }
+
+  #chandler-cover-content {
+    margin-top: 5rem;
+    text-align: center;
+    -webkit-animation: chandlerfadein 2s;
+    animation: chandlerfadein 2s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-delay: chandlerfadein 1s;
+    animation-delay: chandlerfadein 1s;
+
+    #chandler-cover-title {
+      color: white;
+      font-family: Bitter;
+      font-weight: 800;
+      font-size: 5rem;
+      font-style: italic;
+    }
+  }
+}
+
+.chandler-dropdown:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.chandler-expandable {
+  overflow-y: hidden;
+  max-height: 0px;
+  width: 100%;
+
+  transition: max-height 1s ease;
+  -moz-transition: max-height 1s ease; /* Firefox 4 */
+  -webkit-transition: max-height 1s ease; /* Safari and Chrome */
+  -o-transition: max-height 1s ease; /* Opera */
+
+  /* Enable hardware acceleration to fix laggy transitions */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+
+}
+
+.chandler-grown {
+  max-height: 1000px;
+}
+
+#chandler-surprise {
+  color: white;
+}
+
+#chandler-surprise:hover {
+    color: black;
+}
+
+#marcelpicture {
+  transform: rotate(90deg);
+}
+
+#chandler-links {
+ text-align: center;
+
+ img {
+  width: 50px;
+  height: 50px;
+  border-radius: 25%;
+ }
+ img:hover {
+  border: 2px solid white;
+ }
+}
+
+
+#parisimg {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+#parislinks {
+  border: 1px solid white;
+  padding: 20px 0px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+#parislinks a {
+    background: lightsalmon;
+    border: 1px solid lightsalmon;
+    border-radius: 10px;
+    color: white;
+    display: inline-block;
+    margin: 10px;
+    padding: 14px;
+    text-decoration: none;
+  }
+
+#parislinks a:hover {
+    background: salmon;
+    border:5px solid salmon;
+    color: white;
+  }
+
+#parish1 {
+  font-size: 13;
+}
+
+#parisheader {
+  text-align: center;
+  font-style: italic;
+  font-weight: 400;
+}
+
+#paris-cover {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  background-image: url("../images/paris1.jpg");
+  background-size: 100%;
+  position: relative;
+  z-index: -10;
+
+  &:after {
+    content: " ";
+    z-index: -8;
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  #paris-cover-content {
+    margin-top:s 5rem;
+    text-align: center;
+
+    #paris-cover-title {
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 5rem;
+    }
+  }
+}

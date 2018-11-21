@@ -1,0 +1,28 @@
+{
+  "name": "163computingtopics1718-group25",
+  "version": "0.1.0",
+  "description": "The website for 2017/18 Group 25's 163 Computing Topics project",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.doc.ic.ac.uk:ftm17/163ComputingTopics1718-Group25.git"
+  },
+  "author": "ftm17 <fraser.may17@imperial.ac.uk>",
+  "contributors": [
+    "rpk17 <rohan.khosla17@imperial.ac.uk>",
+    "pm3617 <paris.mongkolkul17@imperial.ac.uk>",
+    "tfl4517 <ting.low17@imperial.ac.uk>"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.1.0",
+    "gulp-nunjucks-render": "^2.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sftp": "^0.1.5"
+  },
+  "dependencies": {
+    "foundation-sites": "^6.4.4-rc1"
+  }
+}

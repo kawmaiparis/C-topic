@@ -1,0 +1,86 @@
+{% extends "templates/layout.njk" %}
+{% block content %}
+<div class="grid-container">
+  <div class="grid-x grid-margin-x">
+
+    <div class="small-12 cell">
+      <h1>How the website works</h1>
+    </div>
+
+    <div class="small-12 cell">
+      <h2>Introduction</h2>
+      <p>
+        This page contains information on how the website works and is put
+        together. You should have a basic knowledge of this in case you get
+        asked.
+      </p>
+    </div>
+
+    <div class="small-12 cell">
+      <h2>Foundation</h2>
+      <p>
+        This website uses a <strong>front-end framework</strong> called
+        Foundation. It is similar to Bootstrap, another extremely popular
+        framework. Foundation provides a bunch of CSS classes and styles to help
+        build the website, for example:
+      </p>
+    </div>
+    <div class="small-10 small-offset-1 cell">
+      <h3>Grids</h3>
+      <p>
+        Grids allow you to design a website as if it was a big table but without
+        by dividing the page into 12 evenly sized columns. Page elements can
+        then be made to take up a certain number of these columns.
+      </p>
+
+      <h3>Responsive features</h3>
+      <p>
+        Foundation makes it easy to design a website that works well on both
+        laptops/desktops and phones. Many styles (including the ones which)
+        say how many columns an element takes up can be customised depending
+        on the screen size.
+      </p>
+      <p>
+        For example <code>&lt;div class="small-12 medium-4 cell"&gt;</code>
+        defines an element which on small screens (phones) takes up 12 columns
+        (i.e. the whole screen) but on medium and up only takes up 4 columns.
+      </p>
+    </div>
+
+    <div class="small-12 large-6 cell">
+      <h2>Gulp</h2>
+      <p>
+        Gulp is a <strong>build system</strong> for websites. It uses the
+        <code>Gulpfile.js</code> file to perform various tasks such as:
+        <ul>
+          <li>
+            Compiling Foundation and the custom styles I wrote from SCSS, a kind
+            of stylesheet that is easier to write, to CSS (the type of
+            stylesheet understood by your browser)
+          </li>
+          <li>
+            Compiling the Nunjucks templates the site is written using into
+            HTML the browser can understand
+          </li>
+        </ul>
+      </p>
+    </div>
+
+    <div class="small-12 large-6 cell">
+      <h2>Nunjucks</h2>
+      <p>
+        Instead of writing every single page in raw HTML, I used <strong>
+        Nunjucks Templates</strong>. These allow you to create a "base" page
+        layout that every other page can "inherit" from.
+      </p>
+      <p>
+        For example every page on this site has the same header and footer and
+        only differs on content. So there is a base layout containing the
+        header, footer and links to all the CSS and JavaScript used in the site.
+        Each individual page simply "extends" this base layout, specifying its
+        own content.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

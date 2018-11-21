@@ -1,0 +1,71 @@
+{% extends "templates/layout.njk" %}
+
+{% block content %}
+<div class="grid-container full" id="index-cover">
+  <div id="index-cover-content">
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 cell" id="index-cover-title">
+          Transaction Processing <br />
+          in In-Memory <br />
+          Databases
+        </div>
+      </div>
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 large-4 cell">
+
+        </div>
+        <div class="small-12 large-4 cell" style="color: white">
+
+        </div>
+        <div class="small-12 large-4 cell">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-container">
+  <div class="grid-x grid-margin-x">
+    <div class="small-12 medium-4 cell index-topic-card">
+      <div class="topic-card-text">
+        <h1 class="h3 topic-card-title">Introduction</h1>
+        <p>
+          An introduction to what In-Memory Databases are, the benefits of using
+          them and what sort of applications they are suited to.
+        </p>
+      </div>
+      <div>
+        <a class="button" href="topic-introduction-to-inmemory-databases.html">Read more</a>
+      </div>
+    </div>
+
+    <div class="small-12 medium-4 cell index-topic-card">
+      <div class="topic-card-text">
+        <h1 class="h3 topic-card-title">Transaction Management</h1>
+        <p>
+          An explanation of how to get transactions to work in In-Memory
+          Databases and how to process them.
+        </p>
+      </div>
+      <div>
+        <a class="button" href="topic-transaction-management.html">Read more</a>
+      </div>
+    </div>
+
+    <div class="small-12 medium-4 cell index-topic-card">
+      <div class="topic-card-text">
+        <h1 class="h3 topic-card-title">Case Study</h1>
+        <p>
+          A Case Study of how In-Memory Databases have been deployed in a
+          real-life scenario
+        </p>
+      </div>
+      <div>
+        <a class="button" href="topic-case-study.html">Read more</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

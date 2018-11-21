@@ -1,0 +1,395 @@
+{% extends "templates/layout.njk" %}
+{% block content %}
+  <div class="grid-container">  <!-- Start of main content container -->
+    <h1 class="topic-title">Transaction Management</h1>
+    <hr />
+
+    <div> <!-- Start of Intro Section -->
+      <p>
+        Transaction management systems for disk-based databases cannot
+        support the much higher transaction rate of an in-memory database.
+        They were designed when the read-write speed of the hard-disk was
+        the bottleneck in the RDBMS. However, in an in-memory database,
+        this is no longer the case, and current concurrency control methods
+        do not scale to the much faster transaction rates in a database
+        in main memory.
+      </p>
+      <p>
+        DBMS for traditional databases work by locking records with a
+        separate lock manager. However, the lock manager becomes a bottleneck
+        when using a main memory database. The high read-write speeds quickly
+        cause traditional single-locking mechanisms to degrade when anything
+        but short transactions with no hotspots are used.
+      </p>
+      <p>
+        This has required new transaction management systems to be
+        implemented. The following example is an optimistic, multi-version
+        concurrency control technique.
+      </p>
+    </div> <!-- End of Intro Section -->
+
+    <hr />
+
+    <div> <!-- Start of structure -->
+      <h2>Structure</h2>
+      <p>
+        In a standard DBMS, each record is locked when inspected. However,
+        this process is too slow for an in-memory database, so, instead,
+        each record has a time interval for which it is valid, as does each
+        transaction. Older versions of a record are also stored, unlike in a
+        traditional database. This allows transactions to access records
+        concurrently, with each transaction able to access the appropriate
+        version of a record, without the need for locks. This greatly
+        increase the speed and scalability of the DBMS.
+      </p>
+      <p>
+        The data is stored in lock-free hash-tables. Records are accessed
+        using hash indexes, of which there can be many in one table. Each
+        record has a header containing the beginning and end of the time for
+        which the record is valid. The currently valid record has a valid end
+        time of infinity. When data is written to record, the end time is
+        filed in, and a new version of the record is created with the changes
+        [1][2].
+      </p>
+    </div> <!-- End of Structure Section -->
+
+    <hr />
+
+    <div> <!-- Start of Transaction types Section -->
+      <h2>Transaction Types</h2>
+      <h3>Reads</h3>
+      <p>
+        Every transaction is given a logical read time. Only records whose
+        valid time interval overlaps with this time are visible to the
+        transaction. For a given record, none of the versions have
+        overlapping valid time intervals, so only one version of each record
+        is visible to the transaction. An example of a table is shown in
+        Figure 1 [2].
+      </p>
+      <h3>Updates</h3>
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 medium-6 cell">
+          <p>
+            Figure 1 shows a subsection of a simple table. The record with title
+            Alice, has an ID of 5, and is the current version of the record as the
+            upper bound of the range of valid times is blank.
+          </p>
+        </div>
+        <div class="small-12 medium-6 cell">
+          <figure>
+            <img src="images/MVCC-Update_1.png" />
+            <figcaption>
+              Figure 1: Initial Table  [3]
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <hr style="border-color: #eaeaea;"/>
+
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 medium-6 cell">
+          <p>
+            When the update transaction from Figure 2 is performed, it first scans
+            the table, registering it to the transactions ScanSet, to check for
+            phantom records. Next the transaction checks if the version of the
+            record is visible to it, by checking that the records valid time
+            overlaps with the transaction's. The transaction then checks if it can
+            update the record, by checking if there is a transaction ID in the
+            records start or end time.
+          </p>
+          <p>
+            To update record 5, transaction 102, creates a new version of the
+            record in the same bucket, and writes its transaction ID into the max
+            time of the old record, and into the min time of the new record.
+            This prevents other transactions from updating the record at the same
+            time. Transaction 102 records two pointers into its WriteSet. This is
+            to allow the old version to be reverted to if the transaction fails,
+            and for the old version to be located during garbage collection.
+          </p>
+        </div>
+        <div class="small-12 medium-6 cell">
+          <figure>
+            <img src="images/MVCC-Update_2.png" />
+            <figcaption>
+              Figure 2: During Transaction [3]
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <hr style="border-color: #eaeaea;"/>
+
+      <div>
+        <p>
+          When committing a record, it is first validated. First, the visibility
+          of the versions read is checked. Each record in the ReadSet is checked
+          to make sure that it was visible for the entire length of the
+          transaction. Then, it checks for phantoms by going through its ScanSet
+          and repeating all the scans performed during the transaction to check
+          if any versions of scanned records were creating during the transaction
+          and would be visible to the transaction. If these pass, the transaction
+          fills in its end timestamp into the max time of the old record and the
+          min time of the new record. If a transaction fails, however, it sets
+          them both instead to infinity, reverting the record to its old state
+          and making the new version invisible to all future transactions
+          [1][2][3][6].
+        </p>
+      </div>
+    </div>
+
+    <hr />
+
+    <div> <!-- Start of ACID Transactions -->
+      <h2>ACID Transactions</h2>
+      <p>
+        Transactions must have the ACID properties [5]:
+      </p>
+      <ul>
+        <li>
+          Atomicity - All or nothing execution. If any part of a transaction
+          fails, the whole transaction fails, and the DBMS will rollback all
+          changes made by the transaction.
+        </li>
+        <li>
+          Consistency - Transactions do not leave the database in an
+          inconsistent state.
+        </li>
+        <li>
+          Isolation - Concurrent transactions are executed as if no other
+          transaction is running, essentially emulating serialised execution
+          of the transactions.
+        </li>
+        <li>
+          Durability - The results of a committed transaction are not lost.
+          The DBMS provides mechanisms to recover from system crashes
+          (hardware and software).
+        </li>
+      </ul>
+
+      <div class="callout secondary">
+        <p>
+          To be ACID, transactions must be serializable.  This measn that a
+          transactions reads and writes must occur logically at the same time,
+          or if it can be guaranteed that the same data would be the same if
+          all the reads were performed at the end of the transaction.
+        </p>
+        <ul>
+          <li>
+            <strong>Read-stability</strong>: If a given transaction T reads some
+            version of a value during its processing, the value at the start of
+            the transaction must be the same as the one visible to T at the end
+            of the transaction. This is ensured by validating that the value
+            hasn't changed at the end of the transaction, before the changes
+            are committed.
+          </li>
+          <li>
+            <strong>Phantom Avoidance</strong>:
+            Transaction's scans should only return one version. To ensure this,
+            a rescan is performed to check for new versions before a commit to
+            make sure that nothing has been added to the viewed records [2][5].
+          </li>
+        </ul>
+      </div>
+      <h3> Atomicity </h3>
+      <p>
+        The atomicity property guarantees that each transaction is "all or
+        nothing". What this means is that if any part of the transaction fails
+        then the entire transaction fails, and the database is left unchanged.
+        Atomicity must be ensured in every scenario including power failure,
+        query errors, and system crashes.
+      </p>
+      <p>
+        Multi Version Concurrency Control helps to provide atomicity as any
+        modifications take place in new tuples in the database [4].
+        For example, in the event of a failure during an UPDATE transaction,
+        the start time of the new tuple and end time of the original are set to
+        infinity. This makes the new tuple invisible, so it will be garbage
+        collected. DELETE and INSERT transactions work in a similar manner,
+        setting the end or start times to infinity respectively [1].
+      </p>
+
+      <h3> Consistency </h3>
+      <p>
+        Databases can be set up with various rules and constraints which
+        automatically check and validate the data in the database to ensure it
+        is kept in a consistent state. For example, these constraints could
+        make sure that a column in a table contains unique values (e.g. a
+        primary key) or that some given data isn't null.
+      </p>
+      <p>
+        Transactions satisfy the consistency property if a successful
+        transaction leaves the database in a consistent state, that is none of
+        the constraints previously set up have been violated
+      </p>
+      <p>
+        Generally, when a transaction is executed, the database automatically
+        checks if the transaction is valid according defined rules in the
+        database. If it was found that the resulting transaction is invalid,
+        the transaction is aborted and is rolled back to previous valid state
+        and if the transaction is valid, the guarantee ensures that it is
+        executed accordingly [5].
+      </p>
+
+      <h3>Isolation</h3>
+      <p>
+        Different types of transaction require different levels of isolation.
+        For example, if the database is only executing read-only transactions
+        then it can execute them all concurrently as the data won't change
+        mid-transaction.
+      </p>
+      <p>
+        Transactions satisfy the consistency property if a successful
+        transaction leaves the database in a consistent state, that is none of
+        the constraints previously set up have been violated.
+      </p>
+      <p>
+        However, a concurrency control system such as the Multi Version
+        Concurrency Control system described above is needed to ensure proper
+        isolation between concurrent transactions. This MVCC technique provides
+        Read Committed isolation level where only data from other concurrent
+        transactions is visible [4][5].
+      </p>
+      <h3>Durability</h3>
+      <p>
+        The durability of transactions ensures the safety of data and tables.
+        This means that once a group of statements execute, the results need to
+        be stored in a non-volatile memory. The protocol must prevent data loss
+        from the event of power loss, crashes, errors, or even if the databases
+        crashes after an execution.
+      </p>
+      <p>
+        DBMS should allow a transaction to recover the tables after a failure
+        to a known state. Logs and checkpoints are used to do this by the with
+        the following principles:
+      </p>
+      <ul>
+        <li>
+          The DBMS is optimized for sequential access with fast main memory
+        </li>
+        <li>
+          Minimize overhead - the sum of computation time, bandwidth, memory
+          and other resources
+        </li>
+        <li>
+          Eliminate scaling bottlenecks -  when the flow of data is limited or
+          stopped completely by poor data handling
+        </li>
+        <li>
+          Enable parallelism in I/O and CPU during recovery – performing
+          several computations in parallel
+        </li>
+      </ul>
+      <p>
+        MVCC uses streams stored on external storage to back-up the changes
+        made by transactions [1][2]:
+      </p>
+      <ul>
+        <li>
+          Log Streams contain the effects of committed updated transactions
+          logged as insertion and deletion of row versions.
+        </li>
+        <li>
+          Checkpoint streams contain data streams and delta streams.  Data
+          streams contain all inserted records in a given time interval.
+          Delta streams contain all deleted records in a given time interval
+        </li>
+      </ul>
+      <h4>Logging</h4>
+      <p>
+        Each transaction is logged in a single log record, which contains
+        information about all versions of all records inserted and deleted by
+        the transaction. The DBMS reduces the number of log records appended to
+        each log to avoid bottlenecking in the transaction's tail, hence
+        improving scalability and increasing efficiency. DBMS further enhances
+        the efficiency by grouping multiple log records into one large I/O [1].
+      </p>
+      <h4>Checkpoints</h4>
+      <p>
+        The log stores the effects of the committed transactions as insertions
+        and deletions of versions of records. Checkpoints are compressed
+        representations of logs.  They are built continuously and incrementally
+        as transactions run. In the event of a failure, the checkpoint is
+        loaded, and the transaction log is implemented from its tail to the
+        failure, rebuilding the database to its pre-failure state within a
+        few minutes [1].
+      </p>
+    </div> <!-- End of ACID Transactions -->
+  </div> <!-- End of main content container -->
+
+  <div class="topics-page-references">
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 cell">
+          <h2>References</h2>
+        </div>
+      </div>
+
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 medium-6 cell">
+          <ol class="references-list" style="counter-reset: ref 0">
+            <li> <!-- [1] -->
+              C. Diaconu, C. Freedman, E. Ismert, P. Larson, P. Mittal,
+              R. Stonecipher, N. Verma, M. Zwilling.
+              "Hekaton: SQL Server's Memory-Optimized OLTP Engine"
+              In <em>SIGMOD</em>, June 22-27, 2013. [Online serial].
+              Available:
+              <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2013/06/Hekaton-Sigmod2013-final.pdf">
+                https://www.microsoft.com/en-us/research/wp-content/uploads/2013/06/Hekaton-Sigmod2013-final.pdf
+              </a>
+            </li>
+            <li> <!-- [2] -->
+              P. Larson, S. Blanas, C Diaconu, C. Freedman, J. M. Patel,
+              M. Zwilling.
+              "High-Performance Concurrency Control Mechanisms for Main-Memory
+              Databases"
+              In <em>Proceedings of the VLDB Endowment</em> Vol. 5, No. 4,
+              pages 298-309, 2011. [Online serial]. Available:
+              <a href="http://vldb.org/pvldb/vol5/p298_per-akelarson_vldb2012.pdf">
+                http://vldb.org/pvldb/vol5/p298_per-akelarson_vldb2012.pdf
+              </a>
+            </li>
+            <li> <!-- [3] -->
+              V. Mihalcea, "How does MVCC (Multi-Version Concurrency Control)
+              work", <em>vladmihalcea.com</em>, January 2018. [Online].
+              Available
+              <a href="https://vladmihalcea.com/how-does-mvcc-multi-version-concurrency-control-work/">
+                https://vladmihalcea.com/how-does-mvcc-multi-version-concurrency-control-work/
+              </a>.
+              [Accessed: Mar. 13 2018]
+            </li>
+          </ol>
+        </div>
+
+        <div class="small-12 medium-6 cell">
+          <ol class="references-list" style="counter-reset: ref 3">
+            <li> <!-- [4] -->
+              Y. Wu, J. Arulaj, J. Lin, R. Xian and A. Pavlo.
+              "An Empirical Evaluation of In-Memory Multi-Version Concurrency Control"
+              In <em>Proceedings of the VLDB Endowment</em> Vol. 10, No. 7,
+              pages 781-792, 2017. [Online serial]. Available:
+              <a href="http://15721.courses.cs.cmu.edu/spring2018/papers/05-mvcc1/wu-vldb2017.pdf">
+                http://15721.courses.cs.cmu.edu/spring2018/papers/05-mvcc1/wu-vldb2017.pdf
+              </a>
+            </li>
+            <li> <!-- [5] -->
+              T. Heinis.
+              C130 Databases 1. Lecture, Topic: "Transactions"
+              Department of Computing, Imperial College London.
+              March 2, 2018
+            </li>
+            <li> <!-- [6] -->
+              H. T. Kung, J. T. Robinson.
+              "On Optimistic Methods for Concurrency Control".
+              In <em>ACM Transactions on Database Systems</em> Vol. 6, No. 2,
+              pages 213-226, June 1981. [Online serial]. Available:
+              <a href="https://people.eecs.berkeley.edu/~brewer/cs262/kung.pdf">
+                https://people.eecs.berkeley.edu/~brewer/cs262/kung.pdf
+              </a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

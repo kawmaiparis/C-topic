@@ -1,0 +1,165 @@
+{% extends "templates/layout.njk" %}
+{% block content %}
+  <div class="grid-container">
+    <h1 class="topic-title">Introduction to In-Memory Databases</h1>
+    <hr />
+
+    <div>
+      <h2>What are they?</h2>
+      <p>
+        In-Memory Database Management Systems are, in their simplest form,
+        a type of DBMS which keeps either the entire, or just part of, the
+        working dataset in main memory (RAM). This website focusses mainly on
+        the type which are designed to keep the working dataset completely in
+        main memory.
+      </p>
+      <p>
+        However as simple as this sounds, it is not just as easy as creating a
+        RAM disk and using a traditional DBMS such as PostgreSQL as we aim to
+        show you on this website.
+      </p>
+    </div>
+
+    <div>
+      <h2>Why use them?</h2>
+      <p>
+        The main benefits of keeping data in main memory are related to the
+        obvious performance benefits gained by the massively reduced latency
+        and access times associated with main memory as opposed to other
+        storage mediums.
+      </p>
+
+      <div class="callout secondary">
+        <h3>Storage comparison</h3>
+        <p>
+          Traditional mechanical hard drives <strong>(HDDs)</strong> store
+          data on spinning metal disks and due this mechanical nature of
+          their operation they are relatively slow, typically achieving
+          Read Access Times (i.e. latency) in the order of tens of
+          milliseconds.
+        </p>
+        <p>
+          Solid State Drives <strong>(SSDs)</strong> offer a significant
+          improvement over HDDs, with Read Access Times in the order of
+          tens of <em>micro</em>seconds, up to 1000x quicker than a HDD [1].
+        </p>
+        <p>
+          However, faster than both of these is main memory. Even a modern
+          consumer grade DDR4 memory module can achieve a latency of less
+          than 100ns [2].
+        </p>
+        <div id="storage-chart-container">
+          <canvas id="storage-chart" width="400" height="200px"></canvas>
+        </div>
+      </div>
+
+      <p>
+        Simply keeping the data on much quicker storage isn't the only benefit
+        of using an in-memory database though. Traditional DBMSes have been
+        heavily optimised for keeping the working datasets on HDDs and
+        and recently SSDs, and have a number of features designed to speed up
+        access to this disk-based data including:
+      </p>
+      <ul>
+        <li>
+          <strong>Caching:</strong> Keeping recently used data in memory so it
+          can be retrieved more quickly if it is needed again
+        </li>
+        <li>
+          <strong>Prefetching:</strong> Retrieving data from storage
+          pre-emptively and caching it in memory in anticipation of it
+          being needed in the near future.
+        </li>
+        <li>
+          <strong>Lazy writing:</strong> Instead of immediately saving
+          updates to disk, updates are cached in memory until the DBMS
+          decides to commit them to permanent storage (e.g. if more
+          memory is needed for caching or prefetching)
+        </li>
+      </ul>
+      <p>
+        These features mainly revolve around attempting to recude access
+        latency by intelligently keeping certain pieces of data in main
+        memory. When all the data is already kept in main memory as in the
+        case of an In-Memory Database System, these operations become
+        pointless as the all the data is already kept in memory. All they
+        would do is use up valuable system resources which could be used to
+        optimise the database in other ways [3].
+      </p>
+    </div>
+
+    <div>
+      <h2>What are they used for?</h2>
+      <p>
+        In-Memory Databases have a number of uses where extremely fast access
+        times are important, such as:
+      </p>
+      <ul>
+        <li>
+          High traffic reservation systems (e.g. flight reservations and
+          concert/event ticketing systems <em>cough <strong>the union website
+          </strong>cough</em>)
+        </li>
+        <li>
+          Real-time analytics and business intelligence
+        </li>
+        <li>
+          Fraud detection and prevention systems
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topics-page-references">
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 cell">
+          <h2>References</h2>
+        </div>
+      </div>
+
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 medium-6 cell">
+          <ol class="references-list" style="counter-reset: ref 0">
+            <li>
+              R. Cook, "SSD Throughput, Latency and IOPS Explained – Learning To
+              Run With Flash", <i>thessdreview.com</i>, Jul. 16 2014. [Online].
+              Available
+              <a href="http://www.thessdreview.com/featured/ssd-throughput-latency-iopsexplained/2/">
+                http://www.thessdreview.com/featured/ssd-throughput-latency-iopsexplained/2/
+              </a>.
+              [Accessed: Mar. 12 2018]
+            </li>
+            <li>
+              "UserBenchmark: Crucial UDIMM DDR4 2400 C16 1x16GB CT16G4DFD824A",
+              <i>userbenchmark.com</i>. [Online]. Available
+              <a href="http://ram.userbenchmark.com/SpeedTest/228105/Crucial-CT16G4DFD824AC16FAD-1x16GB">
+                http://ram.userbenchmark.com/SpeedTest/228105/Crucial-CT16G4DFD824AC16FAD-1x16GB
+              </a>.
+              [Accessed: Mar. 12 2018]
+            </li>
+          </ol>
+        </div>
+
+        <div class="small-12 medium-6 cell">
+          <ol class="references-list" style="counter-reset: ref 2">
+            <li>
+              C. Evans, "In-memory databases - what they do and the storage they
+              need", <i>computerweekly.com</i>, May 2014. [Online].
+              Available
+              <a href="http://www.computerweekly.com/feature/In-memory-databases-What-they-do-and-the-storage-they-need">
+                http://www.computerweekly.com/feature/In-memory-databases-What-they-do-and-the-storage-they-need
+              </a>.
+              [Accessed: Mar. 12 2018]
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" integrity="sha256-CfcERD4Ov4+lKbWbYqXD6aFM9M51gN4GUEtDhkWABMo=" crossorigin="anonymous"></script>
+<script src="js/introduction-storage-chart.js"></script>
+{% endblock %}
